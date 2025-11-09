@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>STADIONER — Зруйновані, але не забуті</title>
+  <meta name="description" content="Stadioner — архів пам’яті про українські стадіони, зруйновані війною. Новини, проєкти, магазин з книгою та іншими виданнями." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#fafaf8;--ink:#2d2d2d}
+    *{box-sizing:border-box}
+    body{font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial; background:var(--bg); color:var(--ink)}
+    .section{padding:5rem 1.5rem}
+    @media (min-width:768px){.section{padding:8rem 2rem}}
+    .hover-lift{transition:transform .3s ease, box-shadow .3s ease}
+    .hover-lift:hover{transform:translateY(-3px)}
+    .lang-ua{display:inline}
+    .lang-en{display:none}
+    body.en-active .lang-ua{display:none}
+    body.en-active .lang-en{display:inline}
+    .modal-open{overflow:hidden}
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="fixed top-0 inset-x-0 z-50 bg-white/95 backdrop-blur border-b border-stone-200">
+    <nav class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="#home" class="text-2xl font-light tracking-tight">STADIONER</a>
+      <div class="hidden md:flex items-center gap-7">
+        <a href="#home" class="text-sm text-stone-700 hover:text-stone-900"> <span class="lang-ua">Головна</span><span class="lang-en">Home</span></a>
+        <a href="#news" class="text-sm text-stone-700 hover:text-stone-900"> <span class="lang-ua">Новини</span><span class="lang-en">News</span></a>
+        <a href="#projects" class="text-sm text-stone-700 hover:text-stone-900"> <span class="lang-ua">Проєкти</span><span class="lang-en">Projects</span></a>
+        <a href="#about" class="text-sm text-stone-700 hover:text-stone-900"> <span class="lang-ua">Про нас</span><span class="lang-en">About</span></a>
+        <a href="shop.html" class="text-sm text-stone-700 hover:text-stone-900">$1Магазин$2</a>
+        <a href="#contacts" class="text-sm text-stone-700 hover:text-stone-900"> <span class="lang-ua">Контакти</span><span class="lang-en">Contacts</span></a>
+      </div>
+      <div class="flex items-center gap-3">
+        <button id="langToggle" class="text-xs px-3 py-1.5 border border-stone-300 rounded-full text-stone-700">UA / EN</button>
+        <a href="shop.html?buy=book" class="hidden sm:inline-block text-xs font-medium text-white bg-stone-900 hover:bg-stone-800 px-4 py-2 rounded-full"><span class="lang-ua">Купити книгу</span><span class="lang-en">Buy the book</span></a>
+        <a href="#cart" class="relative inline-flex items-center justify-center w-9 h-9 rounded-full border border-stone-300" aria-label="Cart">
+          <svg class="w-5 h-5 text-stone-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9m12-9l2 9M9 22a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z"/></svg>
+          <span id="cartCount" class="absolute -top-1 -right-1 text-[10px] px-1.5 py-0.5 rounded-full bg-stone-900 text-white">0</span>
+        </a>
+        <button id="menuToggle" class="md:hidden text-stone-900" aria-label="Menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+      </div>
+    </nav>
+    <!-- Mobile -->
+    <div id="mobileMenu" class="hidden md:hidden border-t border-stone-200 bg-white">
+      <div class="px-6 py-4 space-y-3">
+        <a href="#home" class="block text-sm py-2">Головна</a>
+        <a href="#news" class="block text-sm py-2">Новини</a>
+        <a href="#projects" class="block text-sm py-2">Проєкти</a>
+        <a href="#about" class="block text-sm py-2">Про нас</a>
+        <a href="shop.html" class="block text-sm py-2">Магазин</a>
+        <a href="#cart" class="block text-sm py-2">Кошик</a>
+        <a href="#checkout" class="block text-sm py-2">Оформлення</a>
+        <a href="#contacts" class="block text-sm py-2">Контакти</a>
+        <a href="shop.html?buy=book" class="block text-sm text-center text-white bg-stone-900 px-5 py-3 rounded-full mt-2">Купити книгу</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero / Mission -->
+  <section id="home" class="min-h-[80vh] flex items-center justify-center pt-24 pb-12 px-6 bg-gradient-to-b from-stone-50 to-stone-100">
+    <div class="max-w-5xl mx-auto text-center">
+      <h1 class="text-4xl md:text-6xl font-light tracking-tight text-stone-900 mb-6">
+        <span class="lang-ua">Українські стадіони. Зруйновані, але не забуті.</span>
+        <span class="lang-en">Ukrainian stadiums. Destroyed, but not forgotten.</span>
+      </h1>
+      <p class="text-stone-700 text-lg leading-relaxed max-w-3xl mx-auto">
+        <span class="lang-ua">Місія <strong>Stadioner</strong> — розповідати історію українських стадіонів, зруйнованих війною, як символів не лише спорту, а й життя, яке Росія намагається знищити. Ми документуємо ці втрати, щоб зберегти пам’ять, нагадати світові про наслідки агресії та показати, що український народ — незламний. Попри руїни, український футбол живе. Ми продовжуємо грати, тренувати дітей, мріяти про нові арени й відновлення кожного стадіону. <em>Stadioner</em> — це історія про біль, гідність і силу відродження.</span>
+        <span class="lang-en">Stadioner tells the story of Ukrainian stadiums destroyed by war — symbols of sport and everyday life that Russia tries to erase. We document these losses to preserve memory, remind the world of the consequences of aggression, and show Ukraine’s resilience. Despite the ruins, football lives on. We keep playing, coaching kids, and dreaming of new arenas and the recovery of each stadium. Stadioner is a story about pain, dignity, and rebirth.</span>
+      </p>
+      <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4">
+        <a href="#news" class="px-6 py-3 rounded-full border-2 border-stone-900 text-stone-900 text-sm hover:bg-stone-900 hover:text-white"> <span class="lang-ua">До новин</span><span class="lang-en">See news</span></a>
+        <a href="#projects" class="px-6 py-3 rounded-full border-2 border-stone-300 text-stone-700 text-sm hover:border-stone-900"> <span class="lang-ua">Наші проєкти</span><span class="lang-en">Our projects</span></a>
+        <a href="shop.html?buy=book" class="px-6 py-3 rounded-full bg-stone-900 text-white text-sm hover:bg-stone-800"><span class="lang-ua">Купити книгу</span><span class="lang-en">Buy the book</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 primary blocks: News / Projects / Shop -->
+  <section class="section bg-white">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid md:grid-cols-3 gap-6">
+        <a href="#news" class="hover-lift bg-stone-50 border border-stone-200 rounded-lg p-6 block">
+          <h3 class="text-xl font-medium mb-2"><span class="lang-ua">Новини</span><span class="lang-en">News</span></h3>
+          <p class="text-sm text-stone-600"><span class="lang-ua">Оновлення про діяльність і публікації проєкту.</span><span class="lang-en">Updates about our activities and publications.</span></p>
+        </a>
+        <a href="#projects" class="hover-lift bg-stone-50 border border-stone-200 rounded-lg p-6 block">
+          <h3 class="text-xl font-medium mb-2"><span class="lang-ua">Проєкти</span><span class="lang-en">Projects</span></h3>
+          <p class="text-sm text-stone-600"><span class="lang-ua">Архів, експедиції, освітні ініціативи.</span><span class="lang-en">Archive, fieldwork, educational initiatives.</span></p>
+        </a>
+        <a href="#shop" class="hover-lift bg-stone-50 border border-stone-200 rounded-lg p-6 block">
+          <h3 class="text-xl font-medium mb-2"><span class="lang-ua">Магазин</span><span class="lang-en">Shop</span></h3>
+          <p class="text-sm text-stone-600"><span class="lang-ua">Книга «Stadioner» та інші видання.</span><span class="lang-en">The book and future releases.</span></p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- News -->
+  <section id="news" class="section bg-stone-50">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-5xl font-light tracking-tight text-stone-900"><span class="lang-ua">Останні новини</span><span class="lang-en">Latest News</span></h2>
+        <p class="text-stone-600 mt-3"><span class="lang-ua">Список публікацій у форматі карток. Натисніть, щоб відкрити сторінку новини.</span><span class="lang-en">Card list of posts. Click to open a news page.</span></p>
+      </div>
+      <div id="newsGrid" class="grid md:grid-cols-3 gap-8">
+        <!-- Example cards (can be fed from CMS later) -->
+        <article class="news-card hover-lift bg-white rounded-lg overflow-hidden border border-stone-200 cursor-pointer" data-title-ua="Успіх презентації книги" data-title-en="Book Launch Success" data-date="2025-11-01" data-body-ua="Понад 500 людей відвідали подію в Києві. Зібрані кошти будуть спрямовані на відновлення інфраструктури дитячих секцій." data-body-en="Over 500 attendees joined the Kyiv launch. Funds will support rebuilding youth football infrastructure.">
+          <div class="aspect-[4/3] bg-stone-200"></div>
+          <div class="p-6">
+            <p class="text-xs text-stone-500 mb-1">1 листопада 2025</p>
+            <h3 class="text-lg font-medium">Успіх презентації книги</h3>
+            <p class="text-sm text-stone-600 mt-2">Короткий опис новини…</p>
+          </div>
+        </article>
+        <article class="news-card hover-lift bg-white rounded-lg overflow-hidden border border-stone-200 cursor-pointer" data-title-ua="Розширення цифрового архіву" data-title-en="Digital Archive Expansion" data-date="2025-10-28" data-body-ua="Додано 3D-моделі та відео з дронів ще 15 стадіонів до інтерактивного архіву." data-body-en="3D models and drone footage of 15 more stadiums were added to the archive.">
+          <div class="aspect-[4/3] bg-stone-200"></div>
+          <div class="p-6">
+            <p class="text-xs text-stone-500 mb-1">28 жовтня 2025</p>
+            <h3 class="text-lg font-medium">Розширення цифрового архіву</h3>
+            <p class="text-sm text-stone-600 mt-2">Короткий опис новини…</p>
+          </div>
+        </article>
+        <article class="news-card hover-lift bg-white rounded-lg overflow-hidden border border-stone-200 cursor-pointer" data-title-ua="Міжнародне визнання" data-title-en="International Recognition" data-date="2025-10-20" data-body-ua="Проєкт відзначено міжнародною відзнакою за збереження культурної спадщини." data-body-en="Project received international recognition for cultural heritage preservation.">
+          <div class="aspect-[4/3] bg-stone-200"></div>
+          <div class="p-6">
+            <p class="text-xs text-stone-500 mb-1">20 жовтня 2025</p>
+            <h3 class="text-lg font-medium">Міжнародне визнання</h3>
+            <p class="text-sm text-stone-600 mt-2">Короткий опис новини…</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- News Modal (acts as a dedicated page) -->
+  <div id="newsModal" class="hidden fixed inset-0 z-[60] bg-black/50 p-4 md:p-10">
+    <div class="max-w-3xl mx-auto bg-white rounded-lg overflow-hidden">
+      <div class="p-6 md:p-10">
+        <button id="newsClose" class="float-right text-stone-500 hover:text-stone-900" aria-label="Close">✕</button>
+        <p id="newsDate" class="text-xs text-stone-500 mt-1"></p>
+        <h3 id="newsTitle" class="text-2xl md:text-3xl font-medium mt-2"></h3>
+        <div id="newsBody" class="prose prose-stone max-w-none mt-5"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Projects -->
+  <section id="projects" class="section bg-white">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-5xl font-light tracking-tight text-stone-900"><span class="lang-ua">Проєкти</span><span class="lang-en">Projects</span></h2>
+        <p class="text-stone-600 mt-3"><span class="lang-ua">Ключові напрями роботи: архів, експедиції, освіта.</span><span class="lang-en">Key streams: archive, field expeditions, education.</span></p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-stone-50 border border-stone-200 rounded-lg p-6">
+          <h3 class="text-xl font-medium mb-2"><span class="lang-ua">Інтерактивний архів</span><span class="lang-en">Interactive Archive</span></h3>
+          <p class="text-sm text-stone-600"><span class="lang-ua">Фото «до/після», 3D-моделі, карти та довідки кожного об’єкта.</span><span class="lang-en">Before/after photos, 3D, maps and facts per stadium.</span></p>
+        </div>
+        <div class="bg-stone-50 border border-stone-200 rounded-lg p-6">
+          <h3 class="text-xl font-medium mb-2"><span class="lang-ua">Експедиції</span><span class="lang-en">Fieldwork</span></h3>
+          <p class="text-sm text-stone-600"><span class="lang-ua">Документація пошкоджень на місцях, інтерв’ю зі спільнотами.</span><span class="lang-en">On‑site documentation and community interviews.</span></p>
+        </div>
+        <div class="bg-stone-50 border border-stone-200 rounded-lg p-6">
+          <h3 class="text-xl font-medium mb-2"><span class="lang-ua">Освітні програми</span><span class="lang-en">Education</span></h3>
+          <p class="text-sm text-stone-600"><span class="lang-ua">Лекції, виставки, публічні події та робота з дітьми.</span><span class="lang-en">Talks, exhibitions, public events and youth programs.</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Us -->
+  <section id="about" class="section bg-stone-50">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid md:grid-cols-2 gap-12 items-start">
+        <div>
+          <h2 class="text-3xl md:text-5xl font-light tracking-tight text-stone-900 mb-4"><span class="lang-ua">Про нас</span><span class="lang-en">About us</span></h2>
+          <p class="text-stone-700 leading-relaxed mb-4"><span class="lang-ua">Історія, місія, цінності: ми документуємо руйнування та зберігаємо пам’ять, щоб пришвидшити відновлення та підтримати спільноти.</span><span class="lang-en">Story, mission, values: we document destruction and preserve memory to accelerate recovery and support communities.</span></p>
+          <ul class="list-disc pl-5 text-stone-700 space-y-2">
+            <li><span class="lang-ua">Цінності: гідність, доказовість, етика співпраці.</span><span class="lang-en">Values: dignity, evidence, collaborative ethics.</span></li>
+            <li><span class="lang-ua">Партнерства з федераціями, клубами, музеями.</span><span class="lang-en">Partnerships with FAs, clubs, museums.</span></li>
+          </ul>
+          <div class="mt-6">
+            <h3 class="text-lg font-medium mb-3"><span class="lang-ua">Публікації в медіа</span><span class="lang-en">Media mentions</span></h3>
+            <ul class="space-y-2 text-sm">
+              <li><a class="text-stone-900 underline underline-offset-2" href="#" target="_blank">Forbes — Stadiums of Resilience</a></li>
+              <li><a class="text-stone-900 underline underline-offset-2" href="#" target="_blank">BBC — Ukrainian Sport Under Fire</a></li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <h3 class="text-lg font-medium mb-3"><span class="lang-ua">Команда</span><span class="lang-en">Team</span></h3>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-6">
+            <div class="bg-white border border-stone-200 rounded-lg p-4">
+              <div class="aspect-square bg-stone-200 rounded"></div>
+              <p class="mt-3 text-sm font-medium">Ім’я Прізвище</p>
+              <p class="text-xs text-stone-500">Фотограф / Curator</p>
+            </div>
+            <div class="bg-white border border-stone-200 rounded-lg p-4">
+              <div class="aspect-square bg-stone-200 rounded"></div>
+              <p class="mt-3 text-sm font-medium">Ім’я Прізвище</p>
+              <p class="text-xs text-stone-500">Редактор / Editor</p>
+            </div>
+            <div class="bg-white border border-stone-200 rounded-lg p-4">
+              <div class="aspect-square bg-stone-200 rounded"></div>
+              <p class="mt-3 text-sm font-medium">Ім’я Прізвище</p>
+              <p class="text-xs text-stone-500">Дизайнер / Designer</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Shop (Book as primary product) -->
+  <section id="shop" class="section bg-white">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-5xl font-light tracking-tight text-stone-900"><span class="lang-ua">Магазин</span><span class="lang-en">Shop</span></h2>
+        <p class="text-stone-600 mt-3"><span class="lang-ua">Книга — головний товар зараз. Згодом додамо інші позиції.</span><span class="lang-en">The book is the primary item now. More products coming later.</span></p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-10 items-start">
+        <div class="space-y-4">
+          <div class="aspect-[3/4] bg-stone-200 rounded"></div>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="aspect-[4/3] bg-stone-200 rounded"></div>
+            <div class="aspect-[4/3] bg-stone-200 rounded"></div>
+          </div>
+        </div>
+        <div>
+          <h3 class="text-2xl font-medium mb-2"><span class="lang-ua">Книга «Stadioner»</span><span class="lang-en">Book “Stadioner”</span></h3>
+          <p class="text-stone-700"> <span class="lang-ua">Фотокнига з історіями стадіонів «до/після», QR-коди на відео та 3D.</span><span class="lang-en">Photobook with before/after stories, QR to videos & 3D.</span></p>
+          <p class="mt-3 text-lg font-semibold">790 ₴</p>
+          <div class="mt-4 flex gap-3">
+            <a href="shop.html?buy=book" class="px-6 py-3 rounded-full bg-stone-900 text-white text-sm hover:bg-stone-800"><span class="lang-ua">Купити зараз</span><span class="lang-en">Buy now</span></a>
+            <button id="addToCart" data-product-id="book-stadioner" data-title-ua="Книга «Stadioner»" data-title-en="Book “Stadioner”" data-price="790" class="px-6 py-3 rounded-full border border-stone-300 text-sm"> <span class="lang-ua">Додати в кошик</span><span class="lang-en">Add to cart</span></button>
+          </div>
+          <p class="mt-4 text-xs text-stone-500"> <span class="lang-ua">Оплата буде інтегрована через WayforPay (WooCommerce). Кнопка нижче демонстраційна.</span><span class="lang-en">Payments to be integrated via WayforPay (WooCommerce). Demo button below.</span></p>
+
+          <!-- Demo WayforPay form placeholder (non-functional) -->
+          <form id="wfpDemo" class="mt-4 space-y-2" onsubmit="event.preventDefault(); alert('WayforPay Demo: інтегруємо через плагін WooCommerce на CMS.');">
+            <input type="hidden" name="product" value="Stadioner Book" />
+            <input type="hidden" name="amount" value="790" />
+            <button type="submit" class="px-5 py-2 rounded border border-stone-300 text-sm">WayforPay Demo</button>
+          </form>
+
+          <div class="mt-6 text-sm text-stone-700">
+            <ul class="list-disc pl-5 space-y-1">
+              <li><span class="lang-ua">Доставка по Україні: Нова Пошта.</span><span class="lang-en">Shipping in Ukraine: Nova Poshta.</span></li>
+              <li><span class="lang-ua">Міжнародні замовлення: за запитом.</span><span class="lang-en">International: by request.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-14">
+        <h4 class="text-lg font-medium mb-3"><span class="lang-ua">План інтеграції CMS</span><span class="lang-en">CMS integration plan</span></h4>
+        <ol class="list-decimal pl-5 text-sm text-stone-700 space-y-1">
+          <li><span class="lang-ua">WordPress + WooCommerce як CMS.</span><span class="lang-en">WordPress + WooCommerce as CMS.</span></li>
+          <li><span class="lang-ua">Платіжний модуль WayforPay (офіційний плагін).</span><span class="lang-en">WayforPay payment plugin.</span></li>
+          <li><span class="lang-ua">Синхронізація товарів: книга (обов’язково), мерч (пізніше).</span><span class="lang-en">Products: book first, merch later.</span></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cart & Checkout Sections -->
+  <section id="cart" class="section bg-stone-50">
+    <div class="max-w-6xl mx-auto">
+      <div class="mb-8 text-center">
+        <h2 class="text-3xl md:text-5xl font-light tracking-tight text-stone-900"><span class="lang-ua">Кошик</span><span class="lang-en">Cart</span></h2>
+        <p class="text-stone-600 mt-3 text-sm"><span class="lang-ua">Перевірте товари та перейдіть до оформлення.</span><span class="lang-en">Review items and proceed to checkout.</span></p>
+      </div>
+      <div id="cartEmpty" class="hidden text-center text-stone-600">
+        <p><span class="lang-ua">Ваш кошик порожній.</span><span class="lang-en">Your cart is empty.</span></p>
+        <a href="#shop" class="inline-block mt-4 px-5 py-3 rounded-full border border-stone-300 text-sm"><span class="lang-ua">До магазину</span><span class="lang-en">Back to shop</span></a>
+      </div>
+      <div id="cartFilled" class="bg-white rounded-lg border border-stone-200 overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="min-w-full text-sm">
+            <thead class="bg-stone-100 text-stone-600">
+              <tr>
+                <th class="text-left px-6 py-3">Товар</th>
+                <th class="text-left px-6 py-3">Ціна</th>
+                <th class="text-left px-6 py-3">К-сть</th>
+                <th class="text-left px-6 py-3">Сума</th>
+                <th class="px-6 py-3"></th>
+              </tr>
+            </thead>
+            <tbody id="cartTable" class="divide-y divide-stone-100"></tbody>
+          </table>
+        </div>
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 px-6 py-5 bg-stone-50">
+          <p class="text-stone-700"><span class="lang-ua">Промокод буде доступний після інтеграції WooCommerce.</span><span class="lang-en">Coupon field appears after WooCommerce integration.</span></p>
+          <div class="text-right w-full md:w-auto">
+            <div class="text-stone-600 text-sm"><span class="lang-ua">Проміжна сума</span><span class="lang-en">Subtotal</span>: <span id="cartSubtotal" class="font-medium text-stone-900">0 ₴</span></div>
+            <a href="#checkout" class="inline-block mt-2 px-6 py-3 rounded-full bg-stone-900 text-white text-sm hover:bg-stone-800"><span class="lang-ua">Перейти до оформлення</span><span class="lang-en">Proceed to checkout</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="checkout" class="section bg-white">
+    <div class="max-w-6xl mx-auto">
+      <div class="mb-8 text-center">
+        <h2 class="text-3xl md:text-5xl font-light tracking-tight text-stone-900"><span class="lang-ua">Оформлення замовлення</span><span class="lang-en">Checkout</span></h2>
+        <p class="text-stone-600 mt-3 text-sm"><span class="lang-ua">Введіть дані для доставки та оплати.</span><span class="lang-en">Enter delivery and payment details.</span></p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8">
+        <form id="checkoutForm" class="md:col-span-2 space-y-4" onsubmit="event.preventDefault(); alert('Demo Checkout: оплата та створення замовлення будуть виконуватися через WooCommerce + WayforPay.');">
+          <div class="grid sm:grid-cols-2 gap-4">
+            <input name="first_name" required class="px-4 py-3 bg-stone-50 border border-stone-200 rounded text-sm" placeholder="Ім’я" />
+            <input name="last_name" required class="px-4 py-3 bg-stone-50 border border-stone-200 rounded text-sm" placeholder="Прізвище" />
+          </div>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <input type="email" name="email" required class="px-4 py-3 bg-stone-50 border border-stone-200 rounded text-sm" placeholder="Email" />
+            <input type="tel" name="phone" required class="px-4 py-3 bg-stone-50 border border-stone-200 rounded text-sm" placeholder="Телефон" />
+          </div>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <input name="city" required class="px-4 py-3 bg-stone-50 border border-stone-200 rounded text-sm" placeholder="Місто" />
+            <input name="np_branch" required class="px-4 py-3 bg-stone-50 border border-stone-200 rounded text-sm" placeholder="Відділення Нової Пошти" />
+          </div>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <select name="delivery" class="px-4 py-3 bg-stone-50 border border-stone-200 rounded text-sm">
+              <option>Нова Пошта</option>
+              <option>Самовивіз (Київ)</option>
+            </select>
+            <select name="payment" class="px-4 py-3 bg-stone-50 border border-stone-200 rounded text-sm">
+              <option>WayforPay (онлайн)</option>
+              <option>Післяплата</option>
+            </select>
+          </div>
+          <textarea rows="4" name="note" class="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded text-sm" placeholder="Коментар до замовлення"></textarea>
+          <button type="submit" class="px-6 py-3 rounded-full bg-stone-900 text-white text-sm hover:bg-stone-800"><span class="lang-ua">Підтвердити замовлення (демо)</span><span class="lang-en">Place order (demo)</span></button>
+        </form>
+        <aside class="bg-stone-50 border border-stone-200 rounded-lg p-6 h-max">
+          <h4 class="font-medium mb-3"><span class="lang-ua">Ваше замовлення</span><span class="lang-en">Your order</span></h4>
+          <div id="checkoutSummary" class="text-sm text-stone-700 space-y-2">
+            <!-- populated via JS -->
+          </div>
+          <div class="mt-4 text-sm">
+            <div class="flex items-center justify-between py-2 border-t border-stone-200">
+              <span class="text-stone-600"><span class="lang-ua">Проміжна сума</span><span class="lang-en">Subtotal</span></span>
+              <span id="checkoutSubtotal" class="font-medium">0 ₴</span>
+            </div>
+            <div class="flex items-center justify-between py-2">
+              <span class="text-stone-600"><span class="lang-ua">Доставка</span><span class="lang-en">Shipping</span></span>
+              <span class="text-stone-500"><span class="lang-ua">Розраховується при оформленні</span><span class="lang-en">Calculated at checkout</span></span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contacts (Footer) -->
+  <footer id="contacts" class="bg-stone-900 text-stone-300">
+    <div class="max-w-6xl mx-auto px-6 py-16">
+      <div class="grid md:grid-cols-4 gap-12 mb-12">
+        <div class="md:col-span-2">
+          <h3 class="text-lg font-medium text-stone-100 mb-4"><span class="lang-ua">Про фонд</span><span class="lang-en">About the foundation</span></h3>
+          <p class="text-sm leading-relaxed mb-6"><span class="lang-ua">Ми зберігаємо пам’ять про стадіони та підтримуємо відновлення спорту.</span><span class="lang-en">We preserve stadium memory and support recovery.</span></p>
+        </div>
+        <div>
+          <h3 class="text-lg font-medium text-stone-100 mb-4"><span class="lang-ua">Швидкі посилання</span><span class="lang-en">Quick links</span></h3>
+          <nav class="space-y-2 text-sm">
+            <a href="#news" class="block hover:text-stone-100">Новини</a>
+            <a href="#projects" class="block hover:text-stone-100">Проєкти</a>
+            <a href="#about" class="block hover:text-stone-100">Про нас</a>
+            <a href="shop.html" class="block hover:text-stone-100">Магазин</a>
+          </nav>
+        </div>
+        <div>
+          <h3 class="text-lg font-medium text-stone-100 mb-4"><span class="lang-ua">Контакти</span><span class="lang-en">Contacts</span></h3>
+          <div class="space-y-2 text-sm">
+            <a href="mailto:info@stadioner.org" class="block hover:text-stone-100">info@stadioner.org</a>
+            <a href="tel:+380XXXXXXXXX" class="block hover:text-stone-100">+380 XX XXX XXXX</a>
+            <span>Kyiv, Ukraine</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact form in footer with name/email/message -->
+      <div class="max-w-md mb-10">
+        <h3 class="text-lg font-medium text-stone-100 mb-3"><span class="lang-ua">Напишіть нам</span><span class="lang-en">Get in touch</span></h3>
+        <form class="space-y-3" onsubmit="event.preventDefault(); alert('Дякуємо! Ми зв’яжемось з вами.');">
+          <input type="text" placeholder="Ім’я" required class="w-full px-4 py-3 bg-stone-800 border border-stone-700 rounded text-sm text-stone-100 placeholder-stone-500 focus:outline-none focus:border-stone-600" />
+          <input type="email" placeholder="Email" required class="w-full px-4 py-3 bg-stone-800 border border-stone-700 rounded text-sm text-stone-100 placeholder-stone-500 focus:outline-none focus:border-stone-600" />
+          <textarea rows="4" placeholder="Повідомлення" required class="w-full px-4 py-3 bg-stone-800 border border-stone-700 rounded text-sm text-stone-100 placeholder-stone-500 focus:outline-none focus:border-stone-600 resize-none"></textarea>
+          <button type="submit" class="w-full text-sm font-medium text-stone-900 bg-stone-100 hover:bg-white px-6 py-3 rounded-full"> <span class="lang-ua">Надіслати</span><span class="lang-en">Send</span></button>
+        </form>
+      </div>
+
+      <div class="pt-6 border-t border-stone-800 text-center text-sm text-stone-500">
+        © 2025 Stadioner. <span class="lang-ua">Створено з пам’яттю та надією.</span><span class="lang-en">Built with memory and hope.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Language toggle
+    const langBtn = document.getElementById('langToggle');
+    langBtn.addEventListener('click',()=>document.body.classList.toggle('en-active'));
+
+    // Mobile menu
+    const menuToggle=document.getElementById('menuToggle');
+    const mobileMenu=document.getElementById('mobileMenu');
+    menuToggle.addEventListener('click',()=>mobileMenu.classList.toggle('hidden'));
+    mobileMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>mobileMenu.classList.add('hidden')));
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click',e=>{const id=a.getAttribute('href'); const el=document.querySelector(id); if(el){e.preventDefault(); el.scrollIntoView({behavior:'smooth',block:'start'});}})
+    });
+
+    // News modal (acts as dedicated news page)
+    const modal = document.getElementById('newsModal');
+    const modalTitle = document.getElementById('newsTitle');
+    const modalDate = document.getElementById('newsDate');
+    const modalBody = document.getElementById('newsBody');
+    const closeBtn = document.getElementById('newsClose');
+
+    function formatDateISOtoUA(iso){
+      try{const d=new Date(iso); return d.toLocaleDateString('uk-UA', {year:'numeric', month:'long', day:'numeric'})}catch(e){return ''}
+    }
+
+    document.querySelectorAll('.news-card').forEach(card=>{
+      card.addEventListener('click',()=>{
+        const uaActive = !document.body.classList.contains('en-active');
+        const title = uaActive ? card.dataset.titleUa : card.dataset.titleEn;
+        const body = uaActive ? card.dataset.bodyUa : card.dataset.bodyEn;
+        const date = formatDateISOtoUA(card.dataset.date);
+        modalTitle.textContent = title || '';
+        modalDate.textContent = date || '';
+        modalBody.innerHTML = `<p>${(body||'').replace(/</g,'&lt;')}</p>`;
+        modal.classList.remove('hidden');
+        document.body.classList.add('modal-open');
+      })
+    })
+
+    closeBtn.addEventListener('click',()=>{modal.classList.add('hidden'); document.body.classList.remove('modal-open')});
+    modal.addEventListener('click',e=>{ if(e.target===modal){ modal.classList.add('hidden'); document.body.classList.remove('modal-open') } });
+
+    // Demo Buy Now
+    // Buy Now handled via link to shop.html?buy=book
+
+    // Simple Cart (front-end demo, replace with WooCommerce cart later)
+    const cartCountEl = document.getElementById('cartCount');
+    const addToCartBtn = document.getElementById('addToCart');
+    const cartTable = document.getElementById('cartTable');
+    const cartEmpty = document.getElementById('cartEmpty');
+    const cartFilled = document.getElementById('cartFilled');
+    const cartSubtotalEl = document.getElementById('cartSubtotal');
+    const checkoutSummary = document.getElementById('checkoutSummary');
+    const checkoutSubtotalEl = document.getElementById('checkoutSubtotal');
+
+    let cart = [];
+
+    function formatCurrency(n){ return `${n.toLocaleString('uk-UA')} ₴`; }
+    function updateCartCount(){ const c = cart.reduce((s,i)=>s+i.qty,0); cartCountEl.textContent = c; }
+    function renderCart(){
+      if(cart.length===0){ cartEmpty.classList.remove('hidden'); cartFilled.classList.add('hidden'); }
+      else { cartEmpty.classList.add('hidden'); cartFilled.classList.remove('hidden'); }
+      cartTable.innerHTML = cart.map(item=>{
+        const line = item.price*item.qty;
+        return `<tr>
+          <td class="px-6 py-4">${item.title}</td>
+          <td class="px-6 py-4">${formatCurrency(item.price)}</td>
+          <td class="px-6 py-4">
+            <div class="inline-flex items-center gap-2">
+              <button class="px-2 border border-stone-300 rounded" data-act="dec" data-id="${item.id}">−</button>
+              <span>${item.qty}</span>
+              <button class="px-2 border border-stone-300 rounded" data-act="inc" data-id="${item.id}">+</button>
+            </div>
+          </td>
+          <td class="px-6 py-4">${formatCurrency(line)}</td>
+          <td class="px-6 py-4"><button class="text-stone-500 hover:text-stone-900" data-act="rm" data-id="${item.id}">✕</button></td>
+        </tr>`;
+      }).join('');
+      const subtotal = cart.reduce((s,i)=>s+i.price*i.qty,0);
+      cartSubtotalEl.textContent = formatCurrency(subtotal);
+      // Checkout summary
+      checkoutSummary.innerHTML = cart.map(i=>`<div class="flex items-center justify-between"><span>${i.title} × ${i.qty}</span><span>${formatCurrency(i.price*i.qty)}</span></div>`).join('');
+      checkoutSubtotalEl.textContent = formatCurrency(subtotal);
+    }
+
+    function addItem(item){
+      const existing = cart.find(i=>i.id===item.id);
+      if(existing) existing.qty += item.qty; else cart.push({...item});
+      updateCartCount();
+      renderCart();
+    }
+
+    // attach listeners
+    if(addToCartBtn){
+      addToCartBtn.addEventListener('click',()=>{
+        const uaActive = !document.body.classList.contains('en-active');
+        const title = uaActive ? addToCartBtn.dataset.titleUa : addToCartBtn.dataset.titleEn;
+        addItem({ id: addToCartBtn.dataset.productId, title, price: Number(addToCartBtn.dataset.price), qty: 1 });
+        document.querySelector('#cart').scrollIntoView({behavior:'smooth'});
+      });
+    }
+
+    // delegate cart table actions
+    cartTable?.addEventListener('click', (e)=>{
+      const btn = e.target.closest('button'); if(!btn) return;
+      const id = btn.dataset.id; const act = btn.dataset.act;
+      const item = cart.find(i=>i.id===id); if(!item) return;
+      if(act==='inc') item.qty++;
+      if(act==='dec') item.qty = Math.max(1, item.qty-1);
+      if(act==='rm') cart = cart.filter(i=>i.id!==id);
+      updateCartCount();
+      renderCart();
+    });
+
+    // initialize empty cart
+    renderCart(); updateCartCount();
+  </script>
+</body>
+</html>
